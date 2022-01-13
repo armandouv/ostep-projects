@@ -10,6 +10,9 @@
 bool contains_substring(char *line, char *substring, size_t substring_size);
 bool naive(char *line, char *substring, size_t m);
 bool karp_rabin(char *line, char *substring, size_t m);
+
+int power_modulus(int base, int power, int mod);
+
 bool finite_automata(char *line, char *substring, size_t m);
 bool knuth_morris_pratt(char *line, char *substring, size_t m);
 
@@ -91,6 +94,9 @@ bool naive(char *line, char *substring, size_t m) {
 }
 
 bool karp_rabin(char *line, char *substring, size_t m) {
+    int q = 7919;
+    int h = power_modulus(255, m - 1, q);
+
     return false;
 }
 
@@ -100,4 +106,11 @@ bool finite_automata(char *line, char *substring, size_t m) {
 
 bool knuth_morris_pratt(char *line, char *substring, size_t m) {
     return false;
+}
+
+// (mod-1)² must fit in an int
+int power_modulus(int base, int power, int mod) {
+    if (power == 1) return base % mod;
+    int half = power / 2;
+    return (power_modulus(base, half, mod) * power_modulus(base, power - half, mod)) % mod;
 }
